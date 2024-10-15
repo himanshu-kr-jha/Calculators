@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistics Calculator</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container styling */
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            margin: 0 20px;
+        }
+
+        /* Heading styling */
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        /* Input and button styling */
+        input, button {
+            width: calc(100% - 20px);
+            margin: 10px 0;
+            padding: 12px 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Results section styling */
+        .results {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #34495e;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive design for smaller devices */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+
+            input, button {
+                font-size: 14px;
+                padding: 10px;
+            }
+
+            .results {
+                font-size: 16px;
+            }
+
+        }
+        footer {
+    background-color: #f8f9fa; /* Light background color */
+    text-align: center; /* Center the text */
+    padding: 10px 0; /* Add some padding */
+    position: fixed; /* Make it fixed at the bottom */
+    left: 0;
+    right: 0;
+    bottom: 0; /* Position it at the bottom */
+    font-family: Arial, sans-serif; /* Change the font */
+}
+
+footer p {
+    margin: 0; /* Remove default margin */
+    color: #555; /* Text color */
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Statistics Calculator</h2>
+    <p>Enter a series of numbers separated by spaces:</p>
+    <input type="text" id="numbers" placeholder="e.g., 10 20 30 40 50">
+    <button onclick="calculateStats()">Calculate</button>
+
+    <div class="results" id="results"></div>
+</div>
+<footer>
+    <p>Made with love by Himanshu Kumar Jha</p>
+</footer>
+
+
+<script>
+    function calculateStats() {
+        // Get input numbers
+        let input = document.getElementById("numbers").value;
+        let numbers = input.split(" ").map(Number).filter(num => !isNaN(num));
+
+        if (numbers.length === 0) {
+            alert("Please enter valid numbers!");
+            return;
+        }
+
+        // Calculate mean
+        let mean = numbers.reduce((a, b) => a + b, 0) / numbers.length;
+
+        // Calculate variance
+        let variance = numbers.map(num => Math.pow(num - mean, 2))
+                              .reduce((a, b) => a + b, 0) / numbers.length;
+
+        // Calculate standard deviation
+        let stdDeviation = Math.sqrt(variance);
+
+        // Calculate median
+        let sortedNumbers = [...numbers].sort((a, b) => a - b);
+        let median = (sortedNumbers.length % 2 === 0)
+            ? (sortedNumbers[sortedNumbers.length / 2 - 1] + sortedNumbers[sortedNumbers.length / 2]) / 2
+            : sortedNumbers[Math.floor(sortedNumbers.length / 2)];
+
+        // Display the results
+        document.getElementById("results").innerHTML = `
+            <p><strong>Mean:</strong> ${mean.toFixed(2)}</p>
+            <p><strong>Standard Deviation:</strong> ${stdDeviation.toFixed(2)}</p>
+            <p><strong>Variance:</strong> ${variance.toFixed(2)}</p>
+            <p><strong>Median:</strong> ${median.toFixed(2)}</p>
+        `;
+    }
+</script>
+
+</body>
+</html>
