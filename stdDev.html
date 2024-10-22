@@ -144,9 +144,13 @@ footer p {
         // Calculate mean
         let mean = numbers.reduce((a, b) => a + b, 0) / numbers.length;
 
-        // Calculate variance
+        // Calculate population variance (n)
         let variance = numbers.map(num => Math.pow(num - mean, 2))
                               .reduce((a, b) => a + b, 0) / numbers.length;
+
+        // Calculate sample variance (n-1)
+        let sampleVariance = numbers.map(num => Math.pow(num - mean, 2))
+                                    .reduce((a, b) => a + b, 0) / (numbers.length - 1);
 
         // Calculate standard deviation
         let stdDeviation = Math.sqrt(variance);
@@ -161,7 +165,8 @@ footer p {
         document.getElementById("results").innerHTML = `
             <p><strong>Mean:</strong> ${mean.toFixed(2)}</p>
             <p><strong>Standard Deviation:</strong> ${stdDeviation.toFixed(2)}</p>
-            <p><strong>Variance:</strong> ${variance.toFixed(2)}</p>
+            <p><strong>Population Variance (n):</strong> ${variance.toFixed(2)}</p>
+            <p><strong>Sample Variance (n-1):</strong> ${sampleVariance.toFixed(2)}</p>
             <p><strong>Median:</strong> ${median.toFixed(2)}</p>
         `;
     }
